@@ -1,7 +1,3 @@
-# Visual Studio
-.vs
-.vs/*
-
 # Binários e objetos
 bin
 obj
