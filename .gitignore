@@ -3,4 +3,6 @@
 ################################################################################
 
 /.vs
-/source/ConsoleApp/.vs/ConsoleApp
+/source/WebApplication1/.vs
+/source/WebApplication1/bin
+/source/WebApplication1/obj
