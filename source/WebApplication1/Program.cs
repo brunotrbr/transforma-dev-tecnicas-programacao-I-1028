@@ -7,7 +7,127 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World");
 
-app.MapGet("/aula_2", () =>
+app.MapGet("/aula_2_arrays", () =>
+{
+    // Declaração implícita de um array de inteiros
+    int[] numeros = new int[10];
+
+    for(int i = 0; i < numeros.Length; i++)
+    {
+        Console.WriteLine(numeros[i]);
+    }
+
+    Console.Clear();
+
+    // Declaração explícita de um array de strings
+    string[] nomes = new string[] { "Pedro", "Ana", "Lucas" };
+
+    for (int i = 0; i < nomes.Length; i++)
+    {
+        Console.WriteLine(nomes[i]);
+    }
+
+    Console.Clear();
+
+    // Declaração implícita de um array bidimensional de inteiros
+    int[,] matriz = new int[10, 20];
+
+    Console.WriteLine(matriz[0, 1]);
+
+    matriz[0, 1] = 27;
+
+    Console.WriteLine(matriz[0, 1]);
+
+    Console.Clear();
+
+    // Declaração explícita de um array multidimensional de inteiros
+    int[,,] cubo = new int[,,] { { { 1, 2, 3 }, { 4, 5, 6 } },
+                        { { 7, 8, 9 }, { 10, 11, 12 } } };
+
+    for (int i = 0; i < cubo.GetLength(0); i++)
+    {
+        for (int j = 0; j < cubo.GetLength(1); j++)
+        {
+            for (int k = 0; k < cubo.GetLength(2); k++)
+            {
+                Console.Write($"{cubo[i, j, k]} ");
+            }
+            Console.WriteLine();
+        }
+        Console.WriteLine();
+    }
+
+    Console.Clear();
+
+    int[][] matrizIrregular = new int[3][];
+
+    matrizIrregular[0] = new int[] { 1, 3, 5, 7, 9 };
+    matrizIrregular[1] = new int[] { 0, 2, 4, 6 };
+    matrizIrregular[2] = new int[] { 11, 22 };
+
+    for(int i = 0; i < matrizIrregular.GetLength(0); i++)
+    {
+        for (int j = 0; j < matrizIrregular[i].Length; j++)
+        {
+            Console.Write($"{matrizIrregular[i][j]} ");
+        }
+        Console.WriteLine();
+    }
+
+    Console.Clear();
+
+    // Adiciona valores no array
+    numeros = new int[10];
+
+    for(int i = 0; i < numeros.GetLength(0); i++)
+    {
+        numeros[i] = i*2;
+    }
+
+    for (int i = 0; i < numeros.GetLength(0); i++)
+    {
+        Console.WriteLine($"numeros[{i}] = {numeros[i]}");
+    }
+    Console.WriteLine();
+
+    // Quero adicionar o número 50 ao final do array
+    int[] novoArray = new int[11];
+
+    for (int i = 0; i < novoArray.GetLength(0); i++)
+    {
+        Console.WriteLine($"novoArray[{i}] = {novoArray[i]}");
+    }
+    Console.WriteLine();
+
+    for (int i = 0; i < numeros.Length; i++)
+    {
+        novoArray[i] = numeros[i];
+    }
+
+    novoArray[novoArray.Length-1] = 50;
+
+    numeros = novoArray;
+
+    for (int i = 0; i < numeros.GetLength(0); i++)
+    {
+        Console.WriteLine($"numeros[{i}] = {numeros[i]}");
+    }
+    Console.Clear();
+
+    // Adicionar o número 66 no final do array
+    numeros = numeros.ToList().Append(66).ToArray();
+
+    for (int i = 0; i < numeros.GetLength(0); i++)
+    {
+        Console.WriteLine($"numeros[{i}] = {numeros[i]}");
+    }
+
+    return "Ver console";
+
+    
+});
+
+app.MapGet("/aula_2_list", () =>
 {
     List<int> listaUm = new List<int>();
     List<string> listaDois = new List<string>();
@@ -38,18 +158,11 @@ app.MapGet("/aula_2", () =>
 
     listaUm.AddRange(listaTres);
 
-    // E aqui de bônus já tem uma forma de percorrer a lista
-    for (int i = 0; i < listaUm.Count; i++)
-    { 
-        Console.WriteLine(listaUm[i]);
-    }
+    listaUm.ForEach((x) => Console.WriteLine(x));
 
     Console.Clear();
 
-    foreach (int item in listaUm)
-    {
-        Console.WriteLine(item);
-    }
+    listaUm.ForEach((x) => Console.WriteLine(x));
 
     var removido = listaUm.Remove(6);
     Console.WriteLine(removido);
@@ -57,28 +170,19 @@ app.MapGet("/aula_2", () =>
     Console.WriteLine(removido);
     Console.WriteLine();
 
-    foreach (int item in listaUm)
-    {
-        Console.WriteLine(item);
-    }
+    listaUm.ForEach((x) => Console.WriteLine(x));
 
     Console.Clear();
 
     listaUm.RemoveAt(10);
 
-    foreach (int item in listaUm)
-    {
-        Console.WriteLine(item);
-    }
+    listaUm.ForEach((x) => Console.WriteLine(x));
 
     Console.Clear();
 
     listaUm.Reverse();
 
-    foreach(int item in listaUm)
-    {
-        Console.WriteLine(item);
-    }
+    listaUm.ForEach((x) => Console.WriteLine(x));
 
     Console.Clear();
 
@@ -97,10 +201,7 @@ app.MapGet("/aula_2", () =>
 
     listaUm.AddRange(listaUm);
 
-    foreach(int item in listaUm)
-    {
-        Console.WriteLine(item);
-    }
+    listaUm.ForEach((x) => Console.WriteLine(x));
 
     var conjunto = listaUm.ToHashSet();
     Console.WriteLine();
@@ -134,10 +235,7 @@ app.MapGet("/aula_2", () =>
     pilha.Push(5);
     pilha.Push(8);
 
-    foreach(int item in pilha)
-    {
-        Console.WriteLine(item);
-    }
+    listaUm.ForEach((x) => Console.WriteLine(x));
 
     Console.Clear();
 
@@ -182,7 +280,7 @@ app.MapGet("/aula_2", () =>
     Console.Clear();
 
     var itemRemovido = fila.Dequeue();
-    
+
     Console.WriteLine(itemRemovido);
 
     Console.Clear();
@@ -200,6 +298,43 @@ app.MapGet("/aula_2", () =>
 
 
     return "Ver console";
+});
+
+app.MapGet("/aula_2_ex_1", () =>
+{
+    string[] capitais = new string[5];
+
+    capitais[0] = "Brasília";
+    capitais[1] = "São Paulo";
+    capitais[2] = "Rio de Janeiro";
+    capitais[3] = "Belo Horizonte";
+    capitais[4] = "Salvador";
+
+    for (int i = 0; i < 5; i++)
+    {
+        Console.WriteLine("A capital brasileira de número {0} é: {1}", i + 1, capitais[i]);
+    }
+});
+
+app.MapGet("/aula_2_ex_2", () =>
+{
+    int[,] matriz = new int[3, 4];
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            matriz[i, j] = 0;
+        }
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            Console.WriteLine("O elemento [{0}, {1}] da matriz é: {2}", i, j, matriz[i, j]);
+        }
+    }
 });
 
 app.MapGet("/ex_1", ([FromBody]Dictionary<string, List<int>> param) => {
@@ -238,13 +373,12 @@ app.MapGet("/ex_7", ([FromBody] Dictionary<string, int> param) => {
 });
 
 app.MapGet("/ex_8", ([FromBody] Dictionary<string, string> param) => {
-    var resposta = AvaliarExpressaoPosfixada(param["texto"]);
+    var resposta = EhPalindromo(param["texto"]);
     return resposta;
 });
 
-app.MapGet("/ex_9", ([FromBody] Dictionary<string, string> param) => {
-    var resposta = AvaliarExpressaoPosfixada(param["texto"]);
-    return resposta;
+app.MapGet("/ex_9", ([FromBody] Dictionary<string, Queue<int>> param, [FromQuery] int tempo) => {
+    EscalonarTarefas(param["tarefas"], tempo);
 });
 
 app.Run();
@@ -408,3 +542,38 @@ static string BatataQuente(int numJogadores, int tempoAteExplodir)
     return $"Jogador {jogadores.Dequeue()} venceu!";
 }
 
+static bool EhPalindromo(string palavra)
+{
+    Queue<char> fila = new Queue<char>();
+
+    foreach (char c in palavra)
+    {
+        fila.Enqueue(c);
+    }
+
+    while (fila.Count > 0)
+    {
+        if (fila.Dequeue() != palavra[0])
+        {
+            return false;
+        }
+        palavra = palavra.Substring(1);
+    }
+
+    return true;
+}
+
+static void EscalonarTarefas(Queue<int> tarefas, int tempoDeExecucao)
+{   
+    int contador = 0;
+    foreach(int i in tarefas)
+    {
+        while(contador < tempoDeExecucao)
+        {
+            Console.WriteLine($"Executando tarefa {i}");
+            contador++;
+        }
+        Console.WriteLine();
+        contador = 0;
+    }
+}
