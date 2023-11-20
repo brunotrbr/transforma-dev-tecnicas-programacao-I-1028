@@ -9,7 +9,7 @@ app.MapGet("/", () => "Hello World");
 
 app.MapGet("/aula_2_arrays", () =>
 {
-    // Declaração implícita de um array de inteiros
+    // Declaraï¿½ï¿½o implï¿½cita de um array de inteiros
     int[] numeros = new int[10];
 
     for(int i = 0; i < numeros.Length; i++)
@@ -19,7 +19,7 @@ app.MapGet("/aula_2_arrays", () =>
 
     Console.Clear();
 
-    // Declaração explícita de um array de strings
+    // Declaraï¿½ï¿½o explï¿½cita de um array de strings
     string[] nomes = new string[] { "Pedro", "Ana", "Lucas" };
 
     for (int i = 0; i < nomes.Length; i++)
@@ -29,7 +29,7 @@ app.MapGet("/aula_2_arrays", () =>
 
     Console.Clear();
 
-    // Declaração implícita de um array bidimensional de inteiros
+    // Declaraï¿½ï¿½o implï¿½cita de um array bidimensional de inteiros
     int[,] matriz = new int[10, 20];
 
     Console.WriteLine(matriz[0, 1]);
@@ -40,7 +40,7 @@ app.MapGet("/aula_2_arrays", () =>
 
     Console.Clear();
 
-    // Declaração explícita de um array multidimensional de inteiros
+    // Declaraï¿½ï¿½o explï¿½cita de um array multidimensional de inteiros
     int[,,] cubo = new int[,,] { { { 1, 2, 3 }, { 4, 5, 6 } },
                         { { 7, 8, 9 }, { 10, 11, 12 } } };
 
@@ -90,7 +90,7 @@ app.MapGet("/aula_2_arrays", () =>
     }
     Console.WriteLine();
 
-    // Quero adicionar o número 50 ao final do array
+    // Quero adicionar o nï¿½mero 50 ao final do array
     int[] novoArray = new int[11];
 
     for (int i = 0; i < novoArray.GetLength(0); i++)
@@ -114,7 +114,7 @@ app.MapGet("/aula_2_arrays", () =>
     }
     Console.Clear();
 
-    // Adicionar o número 66 no final do array
+    // Adicionar o nï¿½mero 66 no final do array
     numeros = numeros.ToList().Append(66).ToArray();
 
     for (int i = 0; i < numeros.GetLength(0); i++)
@@ -146,7 +146,7 @@ app.MapGet("/aula_2_list", () =>
         listaUm.Add(i);
     }
 
-    // E aqui de bônus já tem uma forma de percorrer a lista
+    // E aqui de bï¿½nus jï¿½ tem uma forma de percorrer a lista
     foreach (int item in listaUm)
     {
         Console.WriteLine(item);
@@ -304,15 +304,15 @@ app.MapGet("/aula_2_ex_1", () =>
 {
     string[] capitais = new string[5];
 
-    capitais[0] = "Brasília";
-    capitais[1] = "São Paulo";
+    capitais[0] = "Brasï¿½lia";
+    capitais[1] = "Sï¿½o Paulo";
     capitais[2] = "Rio de Janeiro";
     capitais[3] = "Belo Horizonte";
     capitais[4] = "Salvador";
 
     for (int i = 0; i < 5; i++)
     {
-        Console.WriteLine("A capital brasileira de número {0} é: {1}", i + 1, capitais[i]);
+        Console.WriteLine("A capital brasileira de nï¿½mero {0} ï¿½: {1}", i + 1, capitais[i]);
     }
 });
 
@@ -332,9 +332,95 @@ app.MapGet("/aula_2_ex_2", () =>
     {
         for (int j = 0; j < 4; j++)
         {
-            Console.WriteLine("O elemento [{0}, {1}] da matriz é: {2}", i, j, matriz[i, j]);
+            Console.WriteLine("O elemento [{0}, {1}] da matriz ï¿½: {2}", i, j, matriz[i, j]);
         }
     }
+});
+
+app.MapGet("/aula_3_dict", () =>
+{
+    Dictionary<string,int> dicionario = new Dictionary<string, int>();
+
+    dicionario.Add("chave", 1);
+    dicionario.Add("nova chave", 2);
+
+    Console.WriteLine(dicionario["chave"]);
+
+    // PorÃ©m observem que se nÃ£o existir a chave, vai retornar uma exceÃ§Ã£o
+    // Console.WriteLine(dicionario["chave qualquer"]);
+
+    int valor;
+    var possuiValor = dicionario.TryGetValue("nova chave", out valor);
+    if (possuiValor == true){
+        Console.WriteLine(valor);
+    }
+    else {
+        Console.WriteLine("A chave 'nova chave' nÃ£o estÃ¡ cadastrada.");
+    }
+
+    possuiValor = dicionario.TryGetValue("outra chave", out valor);
+    if (possuiValor == true){
+        Console.WriteLine(valor);
+    }
+    else {
+        Console.WriteLine("A chave 'outra chave' nÃ£o estÃ¡ cadastrada.");
+    }
+    Console.Clear();
+
+    Console.WriteLine(dicionario.ContainsKey("chave"));
+    Console.Clear();
+
+    foreach(KeyValuePair<string, int> kv in dicionario){
+        Console.WriteLine($"dicionario[{kv.Key}] = {kv.Value}");
+    }
+
+    Console.Clear();
+
+    Console.WriteLine(dicionario.Remove("chave"));
+
+    foreach(KeyValuePair<string, int> kv in dicionario){
+        Console.WriteLine($"dicionario[{kv.Key}] = {kv.Value}");
+    }
+
+
+    return "Ver console";
+});
+
+app.MapGet("/contador_de_palavras", () => {
+var carinhoERespeitoLuizaMartins = "Ã© que eu acabei de terminar e no meu perfil jÃ¡ tem textÃ£o juntei as palavras mais lindas que eu conhecia e finalizei bem clichÃª desejando tudo de bom vida que segue cada um na sua fica o carinho o respeito sem ressentimento amizade continua aprendi com os casal da internet como Ã© que termina mas se eu fosse falar a verdade eu diria eu desejo que vocÃª se foda que pegue sapinho quando for beijar outra boca boca e quando vocÃª for coisar seu brinquedo nÃ£o suba suba espalhe pro povo e cÃª viria piada na rua rua e eu desejo que vocÃª se foda e se levar alguÃ©m pra casa seu cachorro morda morda e que namore alguÃ©m que sua mÃ£e nÃ£o atura atura que vocÃª leve tanto tanto chifre que dÃª pra ver da lua mas fica o carinho e o respeito e vida que segue cada um na sua fica o carinho o respeito sem ressentimento amizade continua aprendi com os casal da internet como Ã© que termina mas se eu fosse falar a verdade eu diria eu desejo que vocÃª se foda que pegue sapinho quando for beijar outra boca boca e quando vocÃª for coisar seu brinquedo nÃ£o suba suba espalhe pro povo e cÃª viria piada na rua rua e eu desejo que vocÃª se foda e se levar alguÃ©m pra casa seu cachorro morda morda e que namore alguÃ©m que sua mÃ£e nÃ£o atura atura que vocÃª leve tanto tanto tanto tanto chifre que dÃª pra ver da lua mas fica o carinho e o respeito";
+var contadorDePalavras = new Dictionary<string, int>();
+
+var letra = carinhoERespeitoLuizaMartins.Split(" ");
+int qtde = 0;
+foreach(string palavra in letra){
+    if(contadorDePalavras.TryGetValue(palavra, out qtde)){
+        qtde++;
+        contadorDePalavras[palavra] = qtde;
+    }
+    else {
+        contadorDePalavras[palavra] = 1;
+    }
+}
+
+foreach(KeyValuePair<string, int> contador in contadorDePalavras){
+    Console.WriteLine($"Palavra: {contador.Key}  |  Qtde: {contador.Value}");
+}
+Console.Clear();
+Console.WriteLine();
+
+var contadorDePalavrasOrdenado = contadorDePalavras.OrderBy(obj => obj.Value).ToDictionary(obj => obj.Key, obj => obj.Value);
+foreach(KeyValuePair<string, int> contador in contadorDePalavrasOrdenado){
+    Console.WriteLine($"Palavra: {contador.Key}  |  Qtde: {contador.Value}");
+}
+
+contadorDePalavrasOrdenado = contadorDePalavras.OrderByDescending(obj => obj.Value).ToDictionary(obj => obj.Key, obj => obj.Value);
+foreach(KeyValuePair<string, int> contador in contadorDePalavrasOrdenado){
+    Console.WriteLine($"Palavra: {contador.Key}  |  Qtde: {contador.Value}");
+}
+
+Console.Clear();
+
+return "Ver console";
 });
 
 app.MapGet("/ex_1", ([FromBody]Dictionary<string, List<int>> param) => {
@@ -503,7 +589,7 @@ static int AvaliarExpressaoPosfixada(string expressao)
                     pilha.Push(operador2 / operador1);
                     break;
                 default:
-                    throw new Exception("Operador inválido");
+                    throw new Exception("Operador invï¿½lido");
             }
         }
     }
