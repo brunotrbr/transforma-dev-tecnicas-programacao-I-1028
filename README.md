@@ -1,2 +1,2 @@
 # template-ada
-Repositório Template para turmas da Ada
+Aulas de técnicas de programação para a turma 1028 do grupo Carrefour - Transforma DEV
