@@ -2,7 +2,7 @@
 
 ## Definições
 
-Horário de início da aula:  
+Horário de início da aula: 19:10
 - Tempo de intervalo: 15 minutos 
 
 Projeto final / Exercícios avaliativos: 
@@ -18,7 +18,7 @@ Comunicação
 
 Vídeo disponível em: https://youtu.be/MLxSzQgg7ic
 
-Link para donwload do Visual Studio Community: https://visualstudio.microsoft.com/pt-br/downloads/
+Link para download do Visual Studio Community: https://visualstudio.microsoft.com/pt-br/downloads/
 
 A primeira vez que você tentar entrar no Visual Studio, ele deve pedir para logar com uma conta da Microsoft ou ignorar o login.
 
@@ -31,7 +31,7 @@ Depois disso, provavelmente peça para configurar o tema do VS (escuro, claro, e
 Caso não vá utilizar o Visual Studio (por exemplo, em ambientes Linux), pode baixar o SDK do .NET nos links abaixo:
 
 
-https://dotnet.microsoft.com/pt-br/download/dotnet/6.0, para a verão do .NET 6
+https://dotnet.microsoft.com/pt-br/download/dotnet/6.0, para a versão do .NET 6
 
 https://dotnet.microsoft.com/pt-br/download/dotnet/8.0, para a versão do .NET 8 (atual LTS)
 
@@ -174,6 +174,7 @@ As bibliotecas implícitas são:
 - System.Net.Http;
 - System.Threading;
 - System.Threading.Tasks;
+- Microsoft.AspNetCore.Builder;
 
 
 No linux ou no terminal, adicionamos uma flag extra no comando
@@ -220,7 +221,36 @@ A forma ruim de fazer isso é escrever a URL direto no código. No código abaix
 ```csharp
 // .. restante do código
 
+app.MapGet("/", () => {
+    // Criação do cliente HTTP
+    HttpClient client = new HttpClient();
 
+    // Get Request
+    HttpRequestMessage requestMessage = new HttpRequestMessage(){
+        Method = HttpMethod.Get,
+        RequestUri = new Uri("https://localhost:7120/")
+    };
+
+    HttpResponseMessage response = client.Send(requestMessage);
+
+    var text = response.Content.ReadAsStringAsync().Result;
+
+    Console.WriteLine(text);
+
+    // Get Request
+    requestMessage = new HttpRequestMessage(){
+        Method = HttpMethod.Get,
+        RequestUri = new Uri("https://localhost:7120/")
+    };
+
+    response = client.Send(requestMessage);
+
+    text = response.Content.ReadAsStringAsync().Result;
+
+    Console.WriteLine(text);
+
+    return text;
+});
 
 // .. restante do código
 ```
@@ -238,7 +268,7 @@ A forma correta de fazer isso é através de variáveis de ambiente, utilizando 
 appsettings.Development.json
 ```json
 "WebApi": {
-    "url": "http://localhost:7183"
+    "url": "http://localhost:7120"
   }
 ```
 
@@ -247,7 +277,7 @@ E vamos criar um novo chamado `appsettings.Production.json`, apontando para o am
 appsettings.Production.json
 ```json
 "WebApi": {
-    "url": "https://localhost:7183"
+    "url": "https://localhost:7120"
   }
 ```
 
@@ -257,7 +287,44 @@ Agora, vamos alterar o arquivo `Program.cs`, para buscar a url que adicionamos n
 ```csharp
 // .. restante do código
 
+app.MapGet("/", () => {
+    // Criação do cliente HTTP
+    HttpClient client = new HttpClient();
 
+    // Utilizar o GetValue<type>(string key)
+    var apiUrl = builder.Configuration.GetValue<string>("WebApi:url");
+    Console.WriteLine(apiUrl);
+
+    // Usando a propriedade indice, sempre retorna uma string
+    var apiUrl2 = builder.Configuration["WebApi:url"];
+    Console.WriteLine(apiUrl2);
+
+    // Get Request
+    HttpRequestMessage requestMessage = new HttpRequestMessage(){
+        Method = HttpMethod.Get,
+        RequestUri = new Uri(apiUrl)
+    };
+
+    HttpResponseMessage response = client.Send(requestMessage);
+
+    var text = response.Content.ReadAsStringAsync().Result;
+
+    Console.WriteLine(text);
+
+    // Get Request
+    requestMessage = new HttpRequestMessage(){
+        Method = HttpMethod.Get,
+        RequestUri = new Uri(apiUrl)
+    };
+
+    response = client.Send(requestMessage);
+
+    text = response.Content.ReadAsStringAsync().Result;
+
+    Console.WriteLine(text);
+
+    return text;
+});
 
 // .. restante do código
 ```
@@ -266,12 +333,12 @@ Para executar nossa aplicação, vamos usar a linha de comando, através do coma
 
 Development
 ```
-dotnet run -lp http
+dotnet run -lp WebApplication2
 ```
 
 Production
 ```
-dotnet run -lp https
+dotnet run -lp WebApplication2Production
 ```
 
 Agora, ao rodar o projeto, podemos ver as variáveis que foram obtidas do arquivo appsettings.json e fazer as requisições para nossa api.
