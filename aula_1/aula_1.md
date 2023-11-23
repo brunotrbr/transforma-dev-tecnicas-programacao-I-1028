@@ -14,6 +14,13 @@ Comunicação
 
 &nbsp;
 
+## Repositório com códigos escritos em aula
+
+https://github.com/brunotrbr/transforma-dev-tecnicas-programacao-I-1028
+
+&nbsp;
+
+
 ## Instalando e configurando o Visual Studio
 
 Vídeo disponível em: https://youtu.be/MLxSzQgg7ic
