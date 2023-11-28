@@ -2,6 +2,41 @@
 
 &nbsp;
 
+# Novo Projeto
+
+Primeiro vamos criar um novo projeto para incluir as novas rotas e chamadas, chamado de ProjetoAulas
+
+Agora, vamos criar um novo arquivo chamado Aula2.cs, com o seguinte conteúdo:
+
+```csharp
+namespace ProjetoAulas
+{
+    public static class Aula2
+    {
+        public static void MapAula2Endpoints(this WebApplication app)
+        {
+            app.MapGet("/aula_2/generics", () =>
+            {
+                return "Aula 2";
+            });
+        }
+    }
+}
+```
+
+e adicionar o método estático `MapAula2Endpoints` no arquivo `program.cs`, registrando ele no nosso app.
+
+```csharp
+app.MapGet("/", () => "Transforma DEV!");
+
+app.MapAula2Endpoints();
+app.Run();
+```
+
+&nbsp;
+
+Esse padrão será repetido em todas as aulas, para dividir o conteúdo de forma mais simples de ver depois.
+
 # O que são Collections?
 
 Antes de explicar o que são Collections, é necessário definir o que são os tipos genéricos (`Generics`).
@@ -15,7 +50,19 @@ A definição parece linda, mas e na prática? Bom, é possível perceber a seme
 ```csharp
 // .. resto do código
 
+app.MapGet("/aula_2/generics", () =>
+{
+    List<int> listaUm = new List<int>();
+    List<string> listaDois = new List<string>();
 
+    listaUm.Add(1);
+    listaDois.Add("2");
+
+    Console.WriteLine(listaUm[0]);
+    Console.WriteLine(listaDois.ElementAt(0));
+
+    return "Aula 2";
+});
 
 // .. resto do código
 ```
@@ -38,7 +85,7 @@ Namespaces são utilizados para
 1) organizar as classes em C#:
 
 ```csharp
-System.Console.WriteLine("Teste")
+
 ```
 
 onde `System` é o namespace e `Console` é a classe.
@@ -49,40 +96,7 @@ onde `System` é o namespace e `Console` é a classe.
 2) para organizar o escopo dos nomes de classes em partes diferentes do código
 
 ```csharp
-app.MapGet("/aula_2_generics", () =>
-{
-    // .. resto do código
-    SampleNamespace.SampleClass.SampleMethod();
-    OtherNamespace.SampleClass.SampleMethod();
-    // .. resto do código
-});
 
-app.Run();
-
-
-namespace SampleNamespace
-{
-    class SampleClass
-    {
-        public static void SampleMethod()
-        {
-            System.Console.WriteLine(
-                "SampleMethod inside SampleNamespace");
-        }
-    }
-}
-
-namespace OtherNamespace
-{
-    class SampleClass
-    {
-        public static void SampleMethod()
-        {
-            System.Console.WriteLine(
-                "SampleMethod inside OtherNamespace");
-        }
-    }
-}
 ```
 
 &nbsp;
@@ -99,7 +113,68 @@ Arrays podem ser inicializados de forma **explícita** ou **implícita**. A inic
 
 ```csharp
 
+app.MapGet("/aula_2/arrays", () =>
+{
+    // Declaração implícita
+    int[] numeros = new int[10];
 
+    for (int i = 0; i < numeros.Length; i++)
+    {
+        Console.WriteLine(numeros[i]);
+    }
+    Console.Clear();
+
+    // Declaração explícita
+    string[] nomes = new string[] { "Anderson", "Bruno", "João" };
+
+    for(int i = 0; i < nomes.Length; i++)
+    {
+        Console.WriteLine(nomes[i]);
+    }
+
+    //try
+    //{
+    //    Console.WriteLine(nomes[3]);
+    //} catch(IndexOutOfRangeException e)
+    //{
+    //    Console.WriteLine("Acesso indevido.");
+    //    Console.WriteLine(e.Message);
+    //    Console.WriteLine(e.StackTrace);
+    //}
+    
+    Console.Clear();
+
+    // Array Bidimensional, ou Matriz
+    // O índice da esquerda deve ser entendido com a linha
+    // O indice da direita deve ser entendido como a coluna
+    int[,] matriz = new int[10, 20];
+
+    Console.WriteLine(matriz[0, 1]);
+
+    matriz[0, 1] = 2;
+
+    Console.WriteLine(matriz[0, 1]);
+
+    Console.Clear();
+
+    // Declaração de matriz irregular, cujos tamanhos podem ser diferentes
+    // A segunda dimensão inicializa com valor null
+
+    int[][] matrizIrregular = new int[3][];
+
+    matrizIrregular[0] = new int[] { 1, 3, 5, 7, 9 };
+    matrizIrregular[1] = new int[] { 2, 4, 6, 8 };
+    matrizIrregular[2] = new int[] { 11, 22 };
+
+    for(int i = 0; i < matrizIrregular.GetLength(0); i++) {
+        for (int j = 0; j < matrizIrregular[i].Length; j++)
+        {
+            Console.WriteLine($"{matrizIrregular[i][j]}");
+        }
+        Console.WriteLine();
+    }
+    Console.Clear();
+});
 
 ```
 
@@ -111,7 +186,36 @@ Arrays possuem tamanho **fixo** e **imutável**. Para adicionar elementos em um 
 
 ```csharp
 
+for(int i = 0; i < numeros.Length; i++)
+{
+    numeros[i] = i * 2;
+}
 
+for (int i = 0; i < numeros.Length; i++)
+{
+    Console.WriteLine($"numeros[{i}] = {numeros[i]}");
+}
+
+int[] novoArray = new int[20];
+
+for (int i = 0; i < numeros.Length; i++)
+{
+    novoArray[i] = numeros[i];
+}
+
+for (int i = 0; i < novoArray.Length; i++)
+{
+    Console.WriteLine($"novoArray[{i}] = {novoArray[i]}");
+}
+
+novoArray[numeros.Length] = 20;
+
+Console.WriteLine();
+for (int i = 0; i < novoArray.Length; i++)
+{
+    Console.WriteLine($"novoArray[{i}] = {novoArray[i]}");
+}
+Console.Clear();
 
 ```
 
@@ -121,7 +225,22 @@ Também podemos transformar o array em lista, adicionar o valor, e converter nov
 
 ```csharp
 
+for (int i = 0; i < novoArray.Length; i++)
+{
+    novoArray[i] = i * 2;
+}
 
+for (int i = 0; i < novoArray.Length; i++)
+{
+    Console.WriteLine($"novoArray[{i}] = {novoArray[i]}");
+}
+
+novoArray = novoArray.ToList().Append(22).ToArray();
+
+for (int i = 0; i < novoArray.Length; i++)
+{
+    Console.WriteLine($"novoArray[{i}] = {novoArray[i]}");
+}
 
 ```
 
@@ -154,7 +273,19 @@ E por ser implementado sobre arrays também podemos buscar elementos na lista us
 
 ```csharp
 
+app.MapGet("/aula_2/list", () =>
+{
+    List<int> listaUm = new List<int>();
+    List<string> listaDois = new List<string>();
 
+    listaUm.Add(1);
+    listaDois.Add("2");
+
+    Console.WriteLine(listaUm[0]);
+    Console.WriteLine(listaDois.ElementAt(0));
+
+    return "Aula 2";
+});
 
 ```
 
@@ -162,7 +293,8 @@ E por ser implementado sobre arrays também podemos buscar elementos na lista us
 
 ```csharp
 
-
+Console.WriteLine(listaUm[4]);
+// System.ArgumentOutOfRangeException: 'Index was out of range. Must be non-negative and less than the size of the collection. Arg_ParamName_Name'
 
 ```
 
@@ -172,7 +304,22 @@ O `AddRange` pode ser utilizado para extender listas. Já temos uma lista com um
 
 ```csharp
 
+    Console.Clear();
+    List<int> listaTres = new List<int>() { 10, 18, 25, 39, 45 };
 
+    for(int i = 0; i < listaUm.Count; i++)
+    {
+        Console.WriteLine(listaUm[i]);
+    }
+
+    for (int i = 0; i < listaTres.Count; i++)
+    {
+        Console.WriteLine(listaTres[i]);
+    }
+
+    listaUm.AddRange(listaTres);
+
+    Console.WriteLine("\n");
 
 ```
 
@@ -186,7 +333,9 @@ Podemos remover a primeira ocorrência de um elemento utilizando o `Remove`. Ela
 
 ```csharp
 
-
+    Console.WriteLine(listaUm.Remove(45));
+    Console.WriteLine(listaUm.Remove(45));
+    listaUm.ForEach(x => Console.WriteLine(x));
 
 ```
 
@@ -196,7 +345,8 @@ Podemos remover o elemento na posição X, desde que a lista tenha um elemento n
 
 ```csharp
 
-
+    listaUm.RemoveAt(0);
+    listaUm.ForEach(x => Console.WriteLine(x));
 
 ```
 
@@ -208,7 +358,18 @@ Ocasionalmente, podemos querer reverter uma lista, para exibir os elementos de t
 
 ```csharp
 
+    for (int i = 0; i < 10; i++)
+    {
+        listaUm.Add(i * 2);
+    }
 
+    listaUm.ForEach(x => Console.WriteLine(x));
+
+    listaUm.Reverse();
+
+    Console.WriteLine();
+
+    listaUm.ForEach(x => Console.WriteLine(x));
 
 ```
 
@@ -238,7 +399,18 @@ O `FirstOrDefault` retorna o primeiro elemento ou o padrão do tipo (string vazi
 
 ```csharp
 
+    Console.Clear();
 
+    Console.WriteLine(listaUm.First());
+
+    Console.WriteLine(listaUm.FirstOrDefault());
+
+    Console.WriteLine();
+
+    List<int> listaVazia = new List<int>();
+
+    Console.WriteLine(listaVazia.FirstOrDefault());
+    Console.WriteLine(listaVazia.First()); // System.InvalidOperationException: 'Sequence contains no elements'
 
 ```
 
@@ -249,7 +421,23 @@ O `FirstOrDefault` retorna o primeiro elemento ou o padrão do tipo (string vazi
 Em determinados momentos, podemos querer eliminar elementos repetidos da lista. Uma solução simples para essa operação é usar o método `ToHashSet`
 ```csharp
 
+    listaUm.ForEach(x => Console.WriteLine(x));
 
+    for (int i = 0; i < 10; i++)
+    {
+        listaUm.Add(i * 2);
+    }
+
+    listaUm.ForEach(x => Console.WriteLine(x));
+
+    Console.WriteLine();
+
+    var conjunto = listaUm.ToHashSet();
+
+    foreach(int item in conjunto)
+    {
+        Console.WriteLine(item);
+    }
 
 ```
 
