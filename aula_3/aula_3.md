@@ -4,7 +4,7 @@
 
 A fila é um tipo de estrutura de dados que segue o padrão FIFO. FIFO vem do inglês _First In First Out_, ou seja, o primeiro a entrar é o primeiro a sair.
 
-Em geral, não deveríamos conhecer todos os elementos da pilha, somente o topo dela.
+Em geral, não deveríamos conhecer todos os elementos da fila, somente o próximo a sair dela.
 
 <img src=https://camo.githubusercontent.com/6e487189b8798d3037648120ad58708fed727feea852cb2d9157d0301c7c4d86/68747470733a2f2f73332d73612d656173742d312e616d617a6f6e6177732e636f6d2f6c6370692f36396463376366342d653166322d346466372d626137312d3638613932323531306536352e706e67 width=150 style="background: white">
 
@@ -24,7 +24,12 @@ O C# já possui uma classe para trabalhar com pilhas, que está dentro do _names
 
 ```csharp
 
+app.MapGet("/aula_3/queue", () =>
+{
+    Queue<string> fila = new Queue<string>();
 
+    return "Aula 3 - Filas";
+});
 
 ```
 
@@ -36,7 +41,16 @@ Para adicionar elementos na fila, utilizamos a operação `Enqueue`.
 
 ```csharp
 
+fila.Enqueue("Primeiro");
+fila.Enqueue("Segundo");
+fila.Enqueue("Terceiro");
 
+foreach(var item in fila)
+{
+    Console.WriteLine(item);
+}
+
+Console.WriteLine();
 
 ```
 
@@ -48,7 +62,14 @@ Para remover primeiro elemento da fila, utilizamos a operação `Dequeue`. Ela r
 
 ```csharp
 
+Console.WriteLine(fila.Dequeue());
 
+Console.WriteLine();
+
+foreach (var item in fila)
+{
+    Console.WriteLine(item);
+}
 
 ```
 
@@ -56,7 +77,9 @@ Caso tente desenfileirar/consultar uma fila vazia, será levantada uma exceção
 
 ```csharp
 
-
+// fila.Dequeue();
+// fila.Dequeue();
+// fila.Dequeue(); // System.InvalidOperationException: 'Queue empty.'
 
 ```
 
@@ -68,13 +91,14 @@ Podemos consultar o próximo da fila sem remover ele, utilizamos o `Peek`.
 
 ```csharp
 
-
+Console.WriteLine();
+Console.WriteLine(fila.Peek());
 
 ```
 
 &nbsp;
 
-Existem diversas outras operações que podem ser realizadas com pilhas, da mesma forma que com listas.
+Existem diversas outras operações que podem ser realizadas com filas, da mesma forma que com listas e pilhas.
 
 `Any`, `All`, `ToHashSet`, `First`, etc.
 

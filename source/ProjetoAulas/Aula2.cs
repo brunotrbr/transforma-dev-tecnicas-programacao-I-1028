@@ -221,8 +221,97 @@
                     Console.WriteLine(item);
                 }
 
+                Console.WriteLine();
 
-                return "Aula 2";
+                var todosAtendem = listaUm.All(x => x < 100);
+                todosAtendem = listaUm.All(x => x < 100);
+                var todosAtendemDois = listaUm.All(x => x < 25);
+                
+                Console.WriteLine(todosAtendem);
+                Console.WriteLine(todosAtendemDois);
+                Console.WriteLine();
+
+                var todosMenoresQue10 = listaUm.Where(x => x < 10);
+
+                foreach (var item in todosMenoresQue10)
+                {
+                    Console.WriteLine(item);
+                }
+
+                var algumAtende = listaUm.Any(x => x < 25);
+                Console.WriteLine(algumAtende);
+
+
+
+
+                return "Aula 2 - List";
+            });
+
+            app.MapGet("/aula_2/stack", () =>
+            {
+                Stack<int> stack = new Stack<int>();
+
+                stack.Push(1);
+                stack.Push(5);
+                stack.Push(8);
+
+                foreach(int item in stack)
+                {
+                    Console.WriteLine(item);
+                }
+
+                Console.Clear();
+
+                Console.WriteLine($"Removido o elemento {stack.Pop()}");
+
+                foreach (int item in stack)
+                {
+                    Console.WriteLine(item);
+                }
+
+                stack.Pop();
+                stack.Pop();
+                // stack.Pop(); // System.InvalidOperationException: 'Stack empty.'
+
+                Console.Clear();
+
+
+                stack.Push(2);
+                stack.Push(4);
+                stack.Push(6);
+
+                Console.WriteLine();
+                Console.WriteLine(stack.Peek());
+
+                stack.Pop();
+                stack.Pop();
+
+                int result;
+                if(stack.TryPop(out result) == true)
+                {
+                    Console.WriteLine(result);
+                } else
+                {
+                    Console.WriteLine("Pilha Vazia");
+                }
+
+                if (stack.TryPop(out result) == true)
+                {
+                    Console.WriteLine(result);
+                }
+                else
+                {
+                    Console.WriteLine("Pilha Vazia");
+                }
+
+                // se for usada a pilha, mas ela estiver vazia, o código quebra.
+                // do
+                //{
+                //    var teste = stack.Peek();
+                //} while (stack.TryPop(out result) == true);
+
+
+                return "Aula 2 - Pilhas";
             });
         }
     }

@@ -449,7 +449,15 @@ Podemos verificar também se todos os elementos atendem a uma condição especí
 
 ```csharp
 
+Console.WriteLine();
 
+var todosAtendem = listaUm.All(x => x < 100);
+todosAtendem = listaUm.All(x => x < 100);
+var todosAtendemDois = listaUm.All(x => x < 25);
+
+Console.WriteLine(todosAtendem);
+Console.WriteLine(todosAtendemDois);
+Console.WriteLine();
 
 ```
 
@@ -461,7 +469,8 @@ Podemos verificar também se pelo menos um dos elementos atendem a uma condiçã
 
 ```csharp
 
-
+var algumAtende = listaUm.Any(x => x < 25);
+Console.WriteLine(algumAtende);
 
 ```
 
@@ -523,7 +532,7 @@ Em geral, não deveríamos conhecer todos os elementos da pilha, somente o topo 
 O C# já possui uma classe para trabalhar com pilhas, que está dentro do _namespace Collections_, a `Stack`. Ela também funciona com tipos genéricos.
 
 ```csharp
-
+Stack<int> stack = new Stack<int>();
 ```
 
 As operações mais comuns de se realizar com pilhas são:
@@ -534,7 +543,14 @@ Para adicionar elementos na pilha, utilizamos a operação `Push`.
 
 ```csharp
 
+ stack.Push(1);
+ stack.Push(5);
+ stack.Push(8);
 
+ foreach(int item in stack)
+ {
+     Console.WriteLine(item);
+ }
 
 ```
 
@@ -546,7 +562,14 @@ Para remover o elemento do topo da pilha, utilizamos a operação `Pop`. Ela ret
 
 ```csharp
 
+Console.Clear();
 
+Console.WriteLine($"Removido o elemento {stack.Pop()}");
+
+foreach (int item in stack)
+{
+    Console.WriteLine(item);
+}
 
 ```
 
@@ -554,7 +577,9 @@ Caso tente remover o elemento de uma pilha vazia, será levantada uma exceção.
 
 ```csharp
 
-
+stack.Pop();
+stack.Pop();
+stack.Pop(); // System.InvalidOperationException: 'Stack empty.'
 
 ```
 
@@ -566,7 +591,40 @@ Podemos consultar o topo da pilha sem remover ele, utilizando o `Peek`.
 
 ```csharp
 
+stack.Push(2);
+stack.Push(4);
+stack.Push(6);
 
+Console.WriteLine();
+Console.WriteLine(stack.Peek());
+
+// Forma segura de recuperar os dados
+stack.Pop();
+stack.Pop();
+
+int result;
+if(stack.TryPop(out result) == true)
+{
+    Console.WriteLine(result);
+} else
+{
+    Console.WriteLine("Pilha Vazia");
+}
+
+if (stack.TryPop(out result) == true)
+{
+    Console.WriteLine(result);
+}
+else
+{
+    Console.WriteLine("Pilha Vazia");
+}
+
+// se for usada a pilha, mas ela estiver vazia, o código quebra.
+do
+{
+    var teste = stack.Peek();
+} while (stack.TryPop(out result) == true);
 
 ```
 
