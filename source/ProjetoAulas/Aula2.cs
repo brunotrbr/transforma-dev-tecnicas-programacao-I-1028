@@ -1,4 +1,7 @@
-﻿namespace ProjetoAulas
+﻿using System;
+using System.Text;
+
+namespace ProjetoAulas
 {
     public static class Aula2
     {
@@ -313,6 +316,148 @@
 
                 return "Aula 2 - Pilhas";
             });
+
+            app.MapGet("/aula_2/ex_3", () =>
+            {
+                // 3) Escreva uma função que receba uma lista de números aleatórios e retorne a soma de todos os números pares da lista.
+                List<int> lista = new List<int>() { 7, 41, 99, 19, 23, 0, 8, 22, 56, 34 };
+
+                int soma = 0;
+                foreach(var numero in lista)
+                {
+                    // Números pares
+                    if (numero % 2 == 0)
+                    {
+                        soma += numero;
+                        // soma = soma + numero
+                    }
+
+                    //// Números ímpares
+                    //if (numero % 2 != 0)
+                    //{
+                    //    soma += numero;
+                    //    // soma = soma + numero
+                    //}
+                }
+
+                return soma;
+            });
+
+            app.MapGet("/aula_2/ex_4", () =>
+            {
+                // 4) Escreva uma função que receba uma lista de strings e retorne uma nova lista contendo somente strings que contenham mais que 5 caracteres.
+
+                List<string> strings = new List<string>() { "thread", "codigo", "tranquilo", "programa", "nao", "algoritmo", "curta" };
+                // Retorno como string
+                //return string.Join(", ", FiltrarStringsLongas(strings));
+
+                // Retorno como json
+                // Criação de um objeto anonimo
+                // Será utilizado no desafio final
+                return new
+                {
+                    ListaDeStrings = FiltrarStringsLongas(strings),
+                    OutroElemento = 1,
+                    Encadeados = new
+                    {
+                        ObjetoEncadeado = "teste"
+                    }
+                };
+            });
+
+            app.MapGet("/aula_2/ex_6", () =>
+            {
+                // 6) Escreva uma função que receba uma string como entrada e retorne a string ao contrário. Utilize pilhas para resolver esse problema.
+                string palavra = "por favor";
+
+                Stack<char> pilha = new Stack<char>();
+                for (int i = 0; i < palavra.Length; i++)
+                {
+                    pilha.Push(palavra[i]);
+                }
+
+                StringBuilder stringReversa = new StringBuilder();
+                while (pilha.Count > 0)
+                {
+                    stringReversa.Append(pilha.Pop());
+                }
+
+                return stringReversa.ToString();
+
+                // Código do Leandro
+                //string stringinformada = "por favor";
+                //Stack<char> pilha = new Stack<char>();
+
+                //foreach (char item in stringinformada)
+                //{
+                //    pilha.Push(item);
+                //}
+
+                //char[] stringinformadaInvertida = new char[stringinformada.Length];
+
+                //for (int i = 0; i < stringinformada.Length; i++)
+                //{
+                //    stringinformadaInvertida[i] = pilha.Pop();
+                //}
+
+                //var teste = stringinformadaInvertida.ToString();
+
+                //string stringInvertida = new string(stringinformadaInvertida);
+
+                //return stringInvertida;
+            });
+
+            app.MapGet("/aula_2/ex_7", () =>
+            {
+                // 7) Escreva uma função que receba uma expressão como entrada e verifique se a expressão está balanceada. Uma expressão está balanceada se para cada parênteses de abertura, deve ter um parênteses de fechamento correspondente. Utilize pilhas para resolver esse problema.
+                string expressao = "por exemplo {{{[]com ( abertura de )} pa}rentese}(s)";
+                
+                Stack<char> pilha = new Stack<char>();
+                for(int i = 0; i < expressao.Length; i++)
+                {
+                    if (expressao[i] == '(' || expressao[i] == '{' || expressao[i] == '[')
+                    {
+                        pilha.Push(expressao[i]);
+                    }
+                    else if(expressao[i] == ')' || expressao[i] == '}' || expressao[i] == ']')
+                    {
+                        if(pilha.Count == 0)
+                        {
+                            return false;
+                            // "palavra )"
+                        }
+
+                        char abertura = pilha.Pop();
+                        if(abertura == '(' && expressao[i] != ')')
+                        {
+                            return false;
+                        }
+                        else if(abertura == '{' && expressao[i] != '}')
+                        {
+                            return false;
+                        }
+                        else if(abertura == '[' && expressao[i] != ']')
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return pilha.Count == 0;
+            });
+        }
+
+        static List<string> FiltrarStringsLongas(List<string> strings)
+        {
+            List<string> resultado = new List<string>();
+            foreach (string str in strings)
+            {
+                if(str.Length > 5)
+                {
+                    resultado.Add(str);
+                }
+            }
+
+            return resultado;
         }
     }
 }

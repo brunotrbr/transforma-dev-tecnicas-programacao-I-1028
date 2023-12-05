@@ -118,7 +118,7 @@ https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.Core
 
 ```
 
-2) Escreva uma função que verifique se uma determinada string é um palíndromo. Uma palavra é um palíndromo quando a leitura da direita para esquerda e da esquerda para direita aão iguais. Utilize filas para resolver esse problema.
+2) Escreva uma função que verifique se uma determinada string é um palíndromo. Uma palavra é um palíndromo quando a leitura da direita para esquerda e da esquerda para direita são iguais. Utilize filas para resolver esse problema.
 
 ```csharp
 
@@ -126,11 +126,32 @@ https://source.dot.net/#System.Private.CoreLib/src/libraries/System.Private.Core
 
 ```
 
-3) Um escalonador de tarefas é um sistem que gerencia a execução de tarefas no computador. Utilize filas para implementar um escalonador de tarefas simples, que execute elas na ordem que forem submetidas. A função não precisa ter nenhum retorno. Obs: As tarefas executam por um período x de tempo.
+3) Um escalonador de tarefas é um sistema que gerencia a execução de tarefas no computador. Utilize filas para implementar um escalonador de tarefas simples, que execute elas na ordem que forem submetidas. A função não precisa ter nenhum retorno. Obs: As tarefas executam por um período x de tempo.
 
 ```csharp
 
+app.MapGet("/aula_3/ex_3", () =>
+{
+    //3) Um escalonador de tarefas é um sistema que gerencia a execução de tarefas no computador. Utilize filas para implementar um escalonador de tarefas simples, que execute elas na ordem que forem submetidas. A função não precisa ter nenhum retorno. Obs: As tarefas executam por um período x de tempo.
+    int tempoDeExecucao = 4;
+    Queue<int> tarefas = new Queue<int>();
+    for(int i = 0; i < 7; i++)
+    {
+        tarefas.Enqueue(i);
+    }
 
+    int contador = 0;
+    foreach(int i in tarefas)
+    {
+        while(contador < tempoDeExecucao)
+        {
+            Console.WriteLine($"Executando tarefa {i}");
+            contador++;
+        }
+        Console.WriteLine();
+        contador = 0;
+    }
+});
 
 ```
 
@@ -238,3 +259,13 @@ app.MapGet("/aula_3/ex_4", () => {
     return "Ver console";
 });
 ```
+&nbsp;
+
+# Caixa de sugestões
+
+Tem alguma sugestão para melhorar o andamento das aulas? Por favor preencha o formulário abaixo.
+
+https://forms.gle/Yg6pSQFaoSYtZ4nG8
+
+
+Não deixe a sugestão de melhorias para depois! Compartilhe antes, que corrijo o mais rápido possível.
