@@ -7,4 +7,5 @@ app.MapGet("/", () => "Transforma DEV!");
 
 app.MapAula2Endpoints();
 app.MapAula3Endpoints();
+app.MapAula4Endpoints();
 app.Run();

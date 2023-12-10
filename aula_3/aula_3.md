@@ -171,12 +171,19 @@ Normalmente utilizamos dicionários quando queremos associar de forma eficiente 
 
 - Gerenciamento de configurações, armazenando e gerenciando parâmetros e chaves em uma aplicação
 
+- Carrinho de compras de um e-commerce.
+
 O C# já possui uma classe para trabalhar com dicionários, que está dentro do _namespace Collections_, a `Dictionary`. Ela também funciona com tipos genéricos.
 
 
 ```csharp
 
+app.MapGet("/aula_3/dictionary", () =>
+{
+    Dictionary<string, int> dicionario = new Dictionary<string, int>();
 
+    return "Transforma DEV";
+});
 
 ```
 
@@ -187,9 +194,12 @@ As operações mais comuns de se realizar com dicionários são:
 Para adicionar um valor, utilizamos o método `Add`
 
 ```csharp
-
-
-
+dicionario.Add("chave", 1);
+dicionario.Add("nova chave", 2);
+// Recuperação segura dos dados.
+Console.WriteLine(dicionario.TryAdd("outra chave", 2));
+Console.WriteLine(dicionario.TryAdd("nova chave", 2));
+//dicionario.Add("nova chave", 88); // System.ArgumentException: 'An item with the same key has already been added. Key: nova chave'
 ```
 
 ### Consultar valores
@@ -200,7 +210,8 @@ Para acessar valores no dicionário, podemos:
 
 ```csharp
 
-
+Console.WriteLine(dicionario["nova chave"]);
+// Console.WriteLine(dicionario["chave qualquer"]); // System.Collections.Generic.KeyNotFoundException: 'The given key 'chave qualquer' was not present in the dictionary.'
 
 ```
 
@@ -210,7 +221,19 @@ Ou tentar recuperar o valor da chave utilizando o método `TryGetValue`.
 
 ```csharp
 
+int valor;
+if (dicionario.TryGetValue("nova chave", out valor))
+{
+    Console.WriteLine(valor);
+}
+else
+{
+    Console.WriteLine("Dicionário não possui a chave \"nova chave\"");
+}
 
+// Retornar somente as chaves ou somente os valores
+var chaves = dicionario.Keys;
+var valores = dicionario.Values;
 
 ```
 
@@ -221,7 +244,14 @@ Podemos consultar se uma chave está no dicionário usando o método `ContainsKe
 
 ```csharp
 
-
+if (dicionario.ContainsKey("nova chave"))
+{
+    Console.WriteLine(dicionario["nova chave"]);
+}
+else
+{
+    Console.WriteLine("Dicionário não possui a chave \"nova chave\"");
+}
 
 ```
 
@@ -231,7 +261,17 @@ Podemos iterar pelo dicionário utilizando o `foreach`:
 
 ```csharp
 
+Console.Clear();
+foreach(KeyValuePair<string, int> kvp in dicionario)
+{
+    Console.WriteLine($"dicionario[{kvp.Key}] = {kvp.Value}");
+}
 
+Console.WriteLine();
+foreach (var kvp in dicionario)
+{
+    Console.WriteLine($"dicionario[{kvp.Key}] = {kvp.Value}");
+}
 
 ```
 
@@ -241,7 +281,28 @@ Para remover um par chave-valor, utilizamos o método `Remove`
 
 ```csharp
 
+Console.Clear();
+Console.WriteLine(dicionario.Remove("chave"));
+foreach (KeyValuePair<string, int> kvp in dicionario)
+{
+    Console.WriteLine($"dicionario[{kvp.Key}] = {kvp.Value}");
+}
 
+if (dicionario.TryGetValue("nova chave", out valor))
+{
+    if(dicionario.Remove("nova chave"))
+    {
+        Console.WriteLine($"Valor removido: {valor}");
+    }
+    else
+    {
+        Console.WriteLine("Não foi possível remover a chave \"nova chave\"");
+    }
+}
+else
+{
+    Console.WriteLine("Dicionário não possui a chave \"nova chave\"");
+}
 
 ```
 
@@ -249,7 +310,10 @@ Para remover um par chave-valor, utilizamos o método `Remove`
 
 #### Contador de frequêcia de palavras em um texto
 
-4) Sabem aqueles _buzzwords_ que as vezes nós vemos em sites e outros lugares? Podemos usar um dicionário para fazer isso, contando quantas ocorrências de cada palavra acontecem em um texto (no exemplo abaixo, vamos fazer a contagem com a música Carinho e Respeito, da Luiza Martins). Ordenar em ordem crescente e decrescente de quantidade.
+4) Sabem aqueles _buzzwords_ que as vezes nós vemos em sites e outros lugares? Podemos usar um dicionário para fazer isso, contando quantas ocorrências de cada palavra acontecem em um texto. 
+ 
+Dada a letra da música abaixo (Carinho e Respeito, da Luiza Martins), criar um dicionário cuja chave seja a palavra da letra e o valor seja quantas vezes aquela palavra apareceu na música.
+Listar na ordem que o dicionário é criado, e depois ordenar em ordem crescente e decrescente de quantidade.
 
 
 ```csharp

@@ -70,6 +70,82 @@ namespace ProjetoAulas
                     contador = 0;
                 }
             });
+
+            app.MapGet("/aula_3/dictionary", () =>
+            {
+                Dictionary<string, int> dicionario = new Dictionary<string, int>();
+
+                dicionario.Add("chave", 1);
+                dicionario.Add("nova chave", 89);
+                Console.WriteLine(dicionario.TryAdd("outra chave", 75));
+                Console.WriteLine(dicionario.TryAdd("nova chave", 2));
+                //dicionario.Add("nova chave", 88); // System.ArgumentException: 'An item with the same key has already been added. Key: nova chave'
+
+                Console.WriteLine(dicionario["nova chave"]);
+                // Console.WriteLine(dicionario["chave qualquer"]); // System.Collections.Generic.KeyNotFoundException: 'The given key 'chave qualquer' was not present in the dictionary.'
+
+                int valor;
+                if (dicionario.TryGetValue("nova chave", out valor))
+                {
+                    Console.WriteLine(valor);
+                }
+                else
+                {
+                    Console.WriteLine("Dicionário não possui a chave \"nova chave\"");
+                }
+
+                // Retornar somente as chaves ou somente os valores
+                var chaves = dicionario.Keys;
+                var valores = dicionario.Values;
+                
+
+                if (dicionario.ContainsKey("nova chave"))
+                {
+                    Console.WriteLine(dicionario["nova chave"]);
+                }
+                else
+                {
+                    Console.WriteLine("Dicionário não possui a chave \"nova chave\"");
+                }
+
+                Console.Clear();
+                foreach(KeyValuePair<string, int> kvp in dicionario)
+                {
+                    Console.WriteLine($"dicionario[{kvp.Key}] = {kvp.Value}");
+                }
+
+                Console.WriteLine();
+                foreach (var kvp in dicionario)
+                {
+                    Console.WriteLine($"dicionario[{kvp.Key}] = {kvp.Value}");
+                }
+
+                Console.Clear();
+                Console.WriteLine(dicionario.Remove("chave"));
+                foreach (KeyValuePair<string, int> kvp in dicionario)
+                {
+                    Console.WriteLine($"dicionario[{kvp.Key}] = {kvp.Value}");
+                }
+
+                if (dicionario.TryGetValue("nova chave", out valor))
+                {
+                    if(dicionario.Remove("nova chave"))
+                    {
+                        Console.WriteLine($"Valor removido: {valor}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Não foi possível remover a chave \"nova chave\"");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Dicionário não possui a chave \"nova chave\"");
+                }
+
+
+                return "Transforma DEV";
+            });
         }
     }
 }

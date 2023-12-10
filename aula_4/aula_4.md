@@ -1,17 +1,19 @@
 # Aula 4
 
-## Utilizando interfaces nativas de coleções do .NET
+# Utilizando interfaces nativas de coleções do .NET
 
 O .NET possui diversas interfaces nativas que podemos reaproveitar em nosso código. Entre elas podemos citar `IEnumerable`, `IEnumerator`, `ICollection` e `IList`. Para utilizá-las, devemos implementar em nossas classe e escrever a implementação dos métodos herdados.
 
 
 ## IEnumerable
 
-É a interface mais básica do .NET. Sua interface contém um iterador padrão, chamado de GetEnumerator, que pemite iterar sobre uma determinada coleção.
+É a interface mais básica do .NET. Sua interface contém um iterador padrão, chamado de `GetEnumerator()`, que permite iterar sobre uma determinada coleção.
 
 É somente leitura, e sua iteração tem somente um sentido de movimento: do início ao final da coleção.
 
 ```csharp
+
+
 
 ```
 
@@ -19,7 +21,7 @@ O .NET possui diversas interfaces nativas que podemos reaproveitar em nosso cód
 
 ## IEnumerator
 
-IEnumerator é a interface utilizada para se movimentar através da coleção, através de métodos como `MoveNext()` para avançar na coleção e `Current` para recuperar o elemento atual. Possui também um método chamado `Reset` para reiniciar a iteração pela coleção.
+IEnumerator é a interface utilizada para se movimentar através da coleção, através de métodos como `MoveNext()` para avançar na coleção e `Current` para recuperar o elemento atual. Possui também um método chamado `Reset()` para reiniciar a iteração pela coleção.
 
 ```csharp
 
