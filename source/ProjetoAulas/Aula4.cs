@@ -16,8 +16,8 @@ namespace ProjetoAulas
 
                 //for(int i = 0; i < t.Count(); i++)
                 //{
-                //    Console.WriteLine(t[i]); // N�o funciona porque o c�digo ainda n�o permite o acesso por �ndice
-                //    Console.WriteLine(t.Itens); // Itens � privado na classe Teste
+                //    Console.WriteLine(t[i]); // Não funciona porque o código ainda não permite o acesso por índice
+                //    Console.WriteLine(t.Itens); // Itens é privado na classe Teste
                 //}
 
                 foreach(int? item in t)
@@ -36,7 +36,7 @@ namespace ProjetoAulas
 
         public void Add(int? item)
         {
-            // A cada adi��o, redimensionamos o array
+            // A cada adição, redimensionamos o array
             Array.Resize(ref Itens, Itens.Length + 1);
             Itens[Itens.Length - 1] = item;
         }
@@ -53,8 +53,8 @@ namespace ProjetoAulas
                 yield return num;
 
                 //[1, 3, 5, 7, 9]
-                //// retornei o n�mero 1, e o pr�xima a retornar � o n�mero 3
-                //// posterga a avalia��o dos n�meros at� que seja solicitado novamente.
+                //// retornei o número 1, e o próxima a retornar é o número 3
+                //// posterga a avaliação dos números até que seja solicitado novamente.
             }
         }
 
