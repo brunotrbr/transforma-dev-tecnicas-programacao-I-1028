@@ -208,4 +208,4 @@ O trabalho como um todo vale 10 pontos. Cada um dos itens definidos nos requisit
 
 Dia 18/12/2023, até as 23:59
 
-Extensível até o dia 20/12/23 às 23:59
+Extensível até o dia 22/12/23 às 23:59
