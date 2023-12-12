@@ -14,7 +14,9 @@ Vamos primeiro considerar nossa base de clientes, carregada para o banco de dado
 Uma das formas de recuperar os dados é através do contexto do banco de dados com alguns métodos próprios do entity framework, conforme visto abaixo:
 
 ```csharp
-
+var clientes = await context.Clientes.ToListAsync();
+var primeiros20 = clientes.Take(20);
+var prim = clientes.First();
 ```
 
 &nbsp;
@@ -24,7 +26,10 @@ Apesar de funcional, isso tem um custo. Recuperamos todos os dados do banco e tr
 Uma alternativa a isso é utilizar o Linq (Language Integrated Query). Com ele podemos escrever de forma semelhante a sintaxe SQL, e os resultados são processados `somente quando forem utilizados` (a chamada `Execução Adiada`).
 
 ```csharp
-
+// Criação de uma consulta
+IQueryable<Clientes> consulta =
+from cliente in context.Clientes
+select cliente;
 ```
 
 &nbsp;
@@ -32,7 +37,11 @@ Uma alternativa a isso é utilizar o Linq (Language Integrated Query). Com ele p
 Reparem que a declaração da consulta não executa a consulta de fato. Para forçar sua execução, precisamos realizar alguma ação nela (um foreach, um count, etc).
 
 ```csharp
-
+// Execução da consulta
+foreach(var cliente in consulta)
+{
+    Console.WriteLine($"Nome: {cliente.first_name}, Cidade: {cliente.city}");
+}
 ```
 
 &nbsp;
@@ -40,7 +49,19 @@ Reparem que a declaração da consulta não executa a consulta de fato. Para for
 Nem todos os campos da consulta com Linq são obrigatórios. 
 
 ```csharp
+// Criação de uma consulta
+IQueryable<Clientes> consultaPorCidade =    // variavel da query
+from cliente in context.Clientes            // obrigatório
+where cliente.city == "Bruxelles"           // opcional
+orderby cliente.first_name                  // opcional
+select cliente;                             // obrigatório, precisa acabar a query com select ou group
 
+// Execução da consulta
+var lista = consultaPorCidade.ToList();
+foreach (var cliente in lista)
+{
+    Console.WriteLine($"Nome: {cliente.first_name}, Cidade: {cliente.city}");
+}
 ```
 
 &nbsp;
