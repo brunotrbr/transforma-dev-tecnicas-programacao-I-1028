@@ -3,5 +3,5 @@
 ################################################################################
 
 .vs
-.vscode/*
-source
+source/ProjetoAulas/bin
+source/ProjetoAulas/obj
