@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.TagHelpers;
-
-namespace ProjetoAulas
+﻿namespace ProjetoAulas
 {
     public static class Aula5
     {
