@@ -11,4 +11,5 @@ app.MapAula4Endpoints();
 app.MapAula5Endpoints();
 app.MapAula6Endpoints();
 app.MapAula7Endpoints();
+app.MapAula8Endpoints();
 app.Run();
